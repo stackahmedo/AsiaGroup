@@ -1,33 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, Phone, Mail, Globe, MessageCircle, ChevronDown, Users } from "lucide-react";
 
-const LANGUAGES = ["JP", "EN", "VN", "Nepali", "Bangla", "Urdu"];
+// Labels match what the user asked for: (jp/en/vn/np/bn/ur/hin)
+const LANGUAGES = ["JP", "EN", "VN", "NP", "BN", "UR", "HIN"] as const;
 
-const LANG_MAP: Record<string, string> = {
+const LANG_MAP: Record<(typeof LANGUAGES)[number], string> = {
   JP: "ja",
   EN: "en",
   VN: "vi",
-  Nepali: "ne",
-  Bangla: "bn",
-  Urdu: "ur"
+  NP: "ne",
+  BN: "bn",
+  UR: "ur",
+  HIN: "hi",
 };
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeLang, setActiveLang] = useState("JP");
+  const [activeLang, setActiveLang] = useState<(typeof LANGUAGES)[number]>("JP");
 
   useEffect(() => {
     const match = document.cookie.match(/googtrans=\/ja\/([a-z]{2})/);
     if (match) {
       const code = match[1];
-      const reverseMap: Record<string, string> = {
-        ja: "JP", en: "EN", vi: "VN", ne: "Nepali", bn: "Bangla", ur: "Urdu"
+      const reverseMap: Record<string, (typeof LANGUAGES)[number]> = {
+        ja: "JP",
+        en: "EN",
+        vi: "VN",
+        ne: "NP",
+        bn: "BN",
+        ur: "UR",
+        hi: "HIN",
       };
       setActiveLang(reverseMap[code] || "JP");
     }
   }, []);
 
-  const translateTo = (lang: string) => {
+  const translateTo = (lang: (typeof LANGUAGES)[number]) => {
     const targetCode = LANG_MAP[lang];
     if (!targetCode) return;
     
