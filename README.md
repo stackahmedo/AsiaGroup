@@ -16,3 +16,10 @@ This contains everything you need to run your app locally.
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+
+## Deploy (GitHub Pages)
+
+This repo includes a GitHub Actions workflow that builds and deploys the `dist/` folder to GitHub Pages on every push to `main`.
+
+1. In GitHub repo settings: `Settings -> Pages -> Build and deployment -> Source`, select `GitHub Actions`
+2. Push to `main` (or run the workflow manually via `Actions`)
